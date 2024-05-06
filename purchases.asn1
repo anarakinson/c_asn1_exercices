@@ -1,0 +1,49 @@
+
+----------------------------------------------------
+-- List of purchase orders
+----------------------------------------------------
+
+
+PurchaseOrders DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+
+PurchaseOrder ::= SEQUENSE {
+	DateOfOrder DATE,
+	Customer CustomerInfo,
+	Items ListOfItems
+}
+
+
+CustomerInfo ::= SEQUENCE {
+	CompanyName VisibleString (SIZE(3..50)),
+	BillingAddress Address,
+	ContactPhone NumericString (SIZE(7..12))
+}
+
+
+Address ::= SEQUENCE {
+	street VisibleString (SIZE(5..50)) OPTIONAL,
+	city VisibleString (SIZE(2..30)),
+	state VisibleString (SIZE(2) ^ FROM("A".."Z")),
+	zipCode NumericString (SIZE(5|9))
+}
+
+
+ListOfItems ::= SEQUENCE (SIZE(1..100)) OF Item
+
+
+Item ::= {
+	ItemCode INTEGER (1..99999),
+	Color VisibleString ("Black"|"Blue"|"Brown"),
+	Power INTEGER (110|220),
+	DeliveryTime INTEGER(1..1000),
+	Quantity INTEGER (1..1000),
+	UnitPrice REAL(1.00..9999.00),
+	IsTaxable BOOLEAN
+}
+
+
+END
+
+
+
